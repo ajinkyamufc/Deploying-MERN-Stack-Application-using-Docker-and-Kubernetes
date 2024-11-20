@@ -1,0 +1,33 @@
+# react-frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-frontend
+  template:
+    metadata:
+      labels:
+        app: react-frontend
+    spec:
+      containers:
+      - name: react-frontend
+        image: jynx2004/goals-react:latest # Replace with your actual React frontend image
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-frontend-service
+spec:
+  selector:
+    app: react-frontend
+  ports:
+  - protocol: TCP
+    port: 3000  # Expose the frontend on port 3000
+    targetPort: 3000
+  type: NodePort  # Exposing it as a NodePort to access from Minikube

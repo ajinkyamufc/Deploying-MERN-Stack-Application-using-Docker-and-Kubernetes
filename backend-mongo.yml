@@ -1,0 +1,28 @@
+# backend-mongo-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-mongo-pod
+  labels:
+    app: backend-mongo
+spec:
+  containers:
+  - name: node-backend
+    image: jynx2004/goals-node # Replace with your actual Node.js image
+    ports:
+    - containerPort: 80
+    #env:
+    #- name: MONGO_URL
+     # value: mongodb://localhost:27017/your-database-name  # Using localhost inside the pod to connect to MongoDB
+
+  - name: mongo
+    image: mongo
+    ports:
+    - containerPort: 27017
+    volumeMounts:
+    - name: mongo-data
+      mountPath: /data/db
+
+  volumes:
+  - name: mongo-data
+    emptyDir: {} # Temporary storage, you can change it to persistent storage if needed

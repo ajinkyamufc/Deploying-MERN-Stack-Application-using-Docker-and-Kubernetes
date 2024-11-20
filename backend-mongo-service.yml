@@ -1,0 +1,13 @@
+# backend-mongo-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-mongo-service
+spec:
+  selector:
+    app: backend-mongo
+  ports:
+  - protocol: TCP
+    port: 80  # Service port for external communication
+    targetPort: 80  # Backend container port
+  type: NodePort  # Exposing it as a NodePort to access it from Minikube
